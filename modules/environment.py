@@ -6,8 +6,6 @@ import os
 
 
 def run(**args):
-    '''
-    Receive the args to complete different tasks.
-    '''
+    '''Receive the args to complete different tasks.'''
     print "[*] In environment module."
     return str(os.environ)
