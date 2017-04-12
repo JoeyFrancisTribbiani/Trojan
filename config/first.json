@@ -1,10 +1,16 @@
 [
     {
         "module":"dirlister",
-        "args":"ip=127.0.0.1,port=0"
+        "args":{
+            "ip" : "127.0.0.1",
+            "port":0
+        }
     },
     {
         "module":"environment",
-        "args":"ip=127.0.0.1,port=0"
+        "args":{
+            "ip" : "127.0.0.1",
+            "port":0
+        }
     }
 ]
