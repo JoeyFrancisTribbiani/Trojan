@@ -11,5 +11,6 @@ def run(**args):
     '''
     print "[*] In dirlister module."
     files = os.listdir(".")
+    print str(args)
 
     return str(files)
