@@ -84,7 +84,7 @@ class GitImporter(object):
         return module
 
 
-def module_runner(cofnig):
+def module_runner(**cofnig):
     task_queue.put(1)
     result = sys.modules[config['module']].run(config['args'])
     task_queue.get()
